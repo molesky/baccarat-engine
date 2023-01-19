@@ -2,7 +2,6 @@
 
 const Card = require('./card.js');
 
-const EventEmitter = require('events');
 const shuffleArray = require('shuffle-array');
 
 const CutCardLengthFromBottom = 16;
@@ -10,7 +9,7 @@ const CutCardLengthFromBottom = 16;
 /**
  * Baccarat shoe
  */
-class Shoe extends EventEmitter {
+class Shoe {
 
     /**
      * Cards left
@@ -42,8 +41,6 @@ class Shoe extends EventEmitter {
      * @constructor
      */
     constructor(decks) {
-        super();
-
         this.decks = decks;
         this.cards = [];
     }
