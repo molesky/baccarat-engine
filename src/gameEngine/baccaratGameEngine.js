@@ -18,9 +18,10 @@ class BaccaratGameEngine {
 
   /**
    * BaccaratGameEngine
+   * @param {number} decks - Count of decks to be included in the shoe
    * @constructor
    */
-  constructor(decks) {
+  constructor(decks = 8) {
     this.resultsEngine = new BaccaratResultsEngine();
     this.shoe = new Shoe(decks);
   }
