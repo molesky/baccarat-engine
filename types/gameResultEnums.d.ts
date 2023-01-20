@@ -1,20 +1,18 @@
-export const enum GameResultOutcomes {
-  Player = "player",
-  Banker = "banker",
-  Tie = "tie",
+export namespace GameResultOutcomes {
+    const Player: string;
+    const Banker: string;
+    const Tie: string;
 }
-
-export const enum GameResultNatural {
-  PlayerNatural8 = "player8",
-  PlayerNatural9 = "player9",
-  BankerNatural8 = "banker8",
-  BankerNatural9 = "banker9",
-  NoNatural = "none",
+export namespace GameResultNatural {
+    const PlayerNatural8: string;
+    const PlayerNatural9: string;
+    const BankerNatural8: string;
+    const BankerNatural9: string;
+    const NoNatural: string;
 }
-
-export const enum GameResultPair {
-  PlayerPair = "player",
-  BankerPair = "banker",
-  BothPair = "both",
-  NoPair = "none",
+export namespace GameResultPair {
+    const PlayerPair: string;
+    const BankerPair: string;
+    const BothPair: string;
+    const NoPair: string;
 }

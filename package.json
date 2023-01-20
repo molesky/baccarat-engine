@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint src/**/*.js",
     "test": "mocha --recursive test",
-    "test:watch": "mocha --recursive test -w"
+    "test:watch": "mocha --recursive test -w",
+    "tsc": "./node_modules/typescript/bin/tsc"
   },
   "keywords": [
     "Javascript",
