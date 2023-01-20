@@ -17,12 +17,12 @@ class BaccaratGameEngine {
   }
 
   /**
-  * BaccaratGameEngine
-  * @constructor
-  */
-  constructor() {
+   * BaccaratGameEngine
+   * @constructor
+   */
+  constructor(decks) {
     this.resultsEngine = new BaccaratResultsEngine();
-    this.shoe = new Shoe(8);
+    this.shoe = new Shoe(decks);
   }
 
   /**
@@ -62,10 +62,10 @@ class BaccaratGameEngine {
     hand.bankerCards.push(bCard1, bCard2);
 
     let bankerCardsValue = this.resultsEngine.calculateHandValue(
-      hand.bankerCards
+      hand.bankerCards,
     );
     let playerCardsValue = this.resultsEngine.calculateHandValue(
-      hand.playerCards
+      hand.playerCards,
     );
 
     let bankerDraw = false;
@@ -73,8 +73,8 @@ class BaccaratGameEngine {
     // Natural (Dealer or Player drew an 8 or 9) - neither side draws, game over.
     if (bankerCardsValue > 7 || playerCardsValue > 7) {
       return hand;
-    // Player has 6 or 7 - stands
-  } else if (playerCardsValue > 5) {
+      // Player has 6 or 7 - stands
+    } else if (playerCardsValue > 5) {
       // Player stood so dealer draws with [0-5] and stands with 6 or 7
       if (bankerCardsValue <= 5) {
         bankerDraw = true;
@@ -135,7 +135,7 @@ class BaccaratGameEngine {
       let banker3rdCard = this.shoe.draw();
       hand.bankerCards.push(banker3rdCard);
       bankerCardsValue = this.resultsEngine.calculateHandValue(
-        hand.bankerCards
+        hand.bankerCards,
       );
     }
 
