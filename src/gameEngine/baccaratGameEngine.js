@@ -19,11 +19,12 @@ class BaccaratGameEngine {
   /**
    * BaccaratGameEngine
    * @param {number} decks - Count of decks to be included in the shoe
+   * @param {number} cutCardLengthFromBottom - Count of cards after the cut card
    * @constructor
    */
-  constructor(decks = 8) {
+  constructor(decks = 8, cutCardLengthFromBottom = 16) {
     this.resultsEngine = new BaccaratResultsEngine();
-    this.shoe = new Shoe(decks);
+    this.shoe = new Shoe(decks, cutCardLengthFromBottom);
   }
 
   /**

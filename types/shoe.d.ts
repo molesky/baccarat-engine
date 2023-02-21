@@ -6,9 +6,11 @@ declare class Shoe {
     /**
      * Shoe constructor
      * @param {number} decks - Count of decks to be included in the shoe
+     * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+     *   card
      * @constructor
      */
-    constructor(decks: number);
+    constructor(decks: number, cutCardLengthFromBottom: number);
     /**
      * Cards left
      * @return {number} Count of cards left
@@ -25,6 +27,7 @@ declare class Shoe {
      */
     get cutCardReached(): boolean;
     decks: number;
+    cutCardLengthFromBottom: number;
     cards: any[];
     /**
      * Creates the cards array

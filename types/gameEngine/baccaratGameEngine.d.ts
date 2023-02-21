@@ -6,9 +6,10 @@ declare class BaccaratGameEngine {
     /**
      * BaccaratGameEngine
      * @param {number} decks - Count of decks to be included in the shoe
+     * @param {number} cutCardLengthFromBottom - Count of cards after the cut card
      * @constructor
      */
-    constructor(decks?: number);
+    constructor(decks?: number, cutCardLengthFromBottom?: number);
     /**
      * Can another game be played without creating another deck.
      */

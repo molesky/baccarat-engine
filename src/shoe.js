@@ -4,7 +4,7 @@ const Card = require('./card.js');
 
 const shuffleArray = require('shuffle-array');
 
-const CutCardLengthFromBottom = 16;
+// const CutCardLengthFromBottom = 16;
 
 /**
  * Baccarat shoe
@@ -24,7 +24,7 @@ class Shoe {
      * @return {number} Count of cards left before cut card
      */
     get cardsBeforeCutCard() {
-        return Math.max(0, this.cardsLeft - CutCardLengthFromBottom);
+        return Math.max(0, this.cardsLeft - this.cutCardLengthFromBottom);
     }
 
     /**
@@ -38,10 +38,13 @@ class Shoe {
     /**
      * Shoe constructor
      * @param {number} decks - Count of decks to be included in the shoe
+     * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+     *   card
      * @constructor
      */
-    constructor(decks) {
+    constructor(decks, cutCardLengthFromBottom) {
         this.decks = decks;
+        this.cutCardLengthFromBottom = cutCardLengthFromBottom;
         this.cards = [];
     }
 
