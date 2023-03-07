@@ -16,7 +16,7 @@ class Shoe {
      * @return {number} Count of cards left
      */
     get cardsLeft() {
-        return this.cards.length;
+        return this.cards.length - this.cardIndex;
     }
 
     /**
@@ -48,6 +48,16 @@ class Shoe {
         this.cards = [];
     }
 
+  /**
+   * Re-shuffles the cards array to reuse the shoe
+   * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+   *   card
+   */
+  reshuffle(cutCardLengthFromBottom) {
+    this.cutCardLengthFromBottom = cutCardLengthFromBottom;
+    this.shuffle();
+  }
+
     /**
      * Creates the cards array
      */
@@ -64,6 +74,7 @@ class Shoe {
      */
     shuffle() {
         shuffleArray(this.cards);
+        this.cardIndex = 0;
     }
 
     /**
@@ -71,12 +82,15 @@ class Shoe {
      * @return {Card} Card drawn
      */
     draw() {
-        if (this.cards.length == 0) {
-            this.createDecks();
+        if (this.cards.length === 0 ||
+            this.cardIndex === null ||
+            this.cardIndex >= this.cards.length) {
             this.shuffle();
         }
 
-        return this.cards.pop();
+        let card = this.cards[this.cardIndex];
+        this.cardIndex += 1;
+        return card;
     }
 
     /**

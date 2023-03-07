@@ -28,6 +28,15 @@ class BaccaratGameEngine {
   }
 
   /**
+   * Re-shuffles the shoe
+   * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+   *   card
+   */
+  reshuffle(cutCardLengthFromBottom = 16) {
+    this.shoe.reshuffle(cutCardLengthFromBottom);
+  }
+
+  /**
    * Performs a burn operation
    * @return {Card} Burn indicator card
    * @return {Card[]} Burn cards

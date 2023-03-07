@@ -17,6 +17,12 @@ declare class BaccaratGameEngine {
     resultsEngine: BaccaratResultsEngine;
     shoe: Shoe;
     /**
+     * Re-shuffles the shoe
+     * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+     *   card
+     */
+    reshuffle(cutCardLengthFromBottom?: number): void;
+    /**
      * Performs a burn operation
      * @return {Card} Burn indicator card
      * @return {Card[]} Burn cards

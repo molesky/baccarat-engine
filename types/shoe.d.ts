@@ -30,6 +30,12 @@ declare class Shoe {
     cutCardLengthFromBottom: number;
     cards: any[];
     /**
+     * Re-shuffles the cards array to reuse the shoe
+     * @param {number} cutCardLengthFromBottom - Count of cards after the cut
+     *   card
+     */
+    reshuffle(cutCardLengthFromBottom: number): void;
+    /**
      * Creates the cards array
      */
     createDecks(): void;
@@ -37,6 +43,7 @@ declare class Shoe {
      * Shuffles the cards array
      */
     shuffle(): void;
+    cardIndex: number;
     /**
      * Draws the next card
      * @return {Card} Card drawn
