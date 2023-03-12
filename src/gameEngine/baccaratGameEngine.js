@@ -26,6 +26,8 @@ class BaccaratGameEngine {
     this.resultsEngine = new BaccaratResultsEngine();
     this.shoe = new Shoe(decks, cutCardLengthFromBottom);
     this.hand = new Hand();
+    this.burnCard = null;
+    this.additionalBurnCards = [];
   }
 
   /**
@@ -39,23 +41,21 @@ class BaccaratGameEngine {
 
   /**
    * Performs a burn operation
-   * @return {Card} Burn indicator card
-   * @return {Card[]} Burn cards
    */
   burnCards() {
-    let burnCard = this.shoe.draw();
-    let burnCards = [];
-
-    let burnCardValue = BaccaratResultsEngine.valueForCard(burnCard);
-
-    // Face cards & T count for 10 during burn
-    if (burnCardValue == 0) burnCardValue = 10;
-
-    for (let i = 0; i < burnCardValue; i++) {
-      burnCards.push(this.shoe.draw());
+    this.burnCard = this.shoe.draw();
+    while (this.additionalBurnCards.length > 0) {
+      this.additionalBurnCards.pop();
     }
 
-    return {burnCard, burnCards};
+    let burnCardValue = BaccaratResultsEngine.valueForCard(this.burnCard);
+
+    // Face cards & T count for 10 during burn
+    if (burnCardValue === 0) burnCardValue = 10;
+
+    for (let i = 0; i < burnCardValue; i++) {
+      this.additionalBurnCards.push(this.shoe.draw());
+    }
   }
 
   nextGameOutcome() {

@@ -17,6 +17,8 @@ declare class BaccaratGameEngine {
     resultsEngine: BaccaratResultsEngine;
     shoe: Shoe;
     hand: Hand;
+    burnCard: import("../card.js");
+    additionalBurnCards: any[];
     /**
      * Re-shuffles the shoe
      * @param {number} cutCardLengthFromBottom - Count of cards after the cut
@@ -25,10 +27,8 @@ declare class BaccaratGameEngine {
     reshuffle(cutCardLengthFromBottom?: number): void;
     /**
      * Performs a burn operation
-     * @return {Card} Burn indicator card
-     * @return {Card[]} Burn cards
      */
-    burnCards(): any;
+    burnCards(): void;
     nextGameOutcome(): string;
     /**
      * Performs a game
