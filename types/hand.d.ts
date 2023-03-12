@@ -11,4 +11,8 @@ declare class Hand {
     constructor(playerCards?: any[], bankerCards?: any[]);
     playerCards: any[];
     bankerCards: any[];
+    /**
+     * Clears the player and banker cards
+     */
+    clear(): void;
 }

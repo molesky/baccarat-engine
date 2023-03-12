@@ -16,6 +16,7 @@ declare class BaccaratGameEngine {
     get isBurnNeeded(): boolean;
     resultsEngine: BaccaratResultsEngine;
     shoe: Shoe;
+    hand: Hand;
     /**
      * Re-shuffles the shoe
      * @param {number} cutCardLengthFromBottom - Count of cards after the cut
@@ -28,11 +29,11 @@ declare class BaccaratGameEngine {
      * @return {Card[]} Burn cards
      */
     burnCards(): any;
+    nextGameOutcome(): string;
     /**
      * Performs a game
-     * @return {Hand} Game play hand data
      */
-    dealGame(): Hand;
+    dealGame(): void;
 }
 import BaccaratResultsEngine = require("../baccaratResultsEngine.js");
 import Shoe = require("../shoe.js");

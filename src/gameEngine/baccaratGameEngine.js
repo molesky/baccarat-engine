@@ -25,6 +25,7 @@ class BaccaratGameEngine {
   constructor(decks = 8, cutCardLengthFromBottom = 16) {
     this.resultsEngine = new BaccaratResultsEngine();
     this.shoe = new Shoe(decks, cutCardLengthFromBottom);
+    this.hand = new Hand();
   }
 
   /**
@@ -57,9 +58,13 @@ class BaccaratGameEngine {
     return {burnCard, burnCards};
   }
 
+  nextGameOutcome() {
+    this.dealGame();
+    return this.resultsEngine.calculateOutcome(this.hand);
+  }
+
   /**
    * Performs a game
-   * @return {Hand} Game play hand data
    */
   dealGame() {
     let pCard1 = this.shoe.draw();
@@ -67,23 +72,21 @@ class BaccaratGameEngine {
     let pCard2 = this.shoe.draw();
     let bCard2 = this.shoe.draw();
 
-    let hand = new Hand();
-
-    hand.playerCards.push(pCard1, pCard2);
-    hand.bankerCards.push(bCard1, bCard2);
+    this.hand.clear();
+    this.hand.playerCards.push(pCard1, pCard2);
+    this.hand.bankerCards.push(bCard1, bCard2);
 
     let bankerCardsValue = this.resultsEngine.calculateHandValue(
-      hand.bankerCards,
+      this.hand.bankerCards,
     );
     let playerCardsValue = this.resultsEngine.calculateHandValue(
-      hand.playerCards,
+      this.hand.playerCards,
     );
 
     let bankerDraw = false;
 
     // Natural (Dealer or Player drew an 8 or 9) - neither side draws, game over.
     if (bankerCardsValue > 7 || playerCardsValue > 7) {
-      return hand;
       // Player has 6 or 7 - stands
     } else if (playerCardsValue > 5) {
       // Player stood so dealer draws with [0-5] and stands with 6 or 7
@@ -93,7 +96,7 @@ class BaccaratGameEngine {
       // Player has 0 - 5, draws 3rd card
     } else {
       let player3rdCard = this.shoe.draw();
-      hand.playerCards.push(player3rdCard);
+      this.hand.playerCards.push(player3rdCard);
       let player3rdCardValue =
         BaccaratResultsEngine.valueForCard(player3rdCard);
 
@@ -124,33 +127,12 @@ class BaccaratGameEngine {
           if (bankerCardsValue < 4) bankerDraw = true;
           break;
       }
-
-      // if (bankerCardsValue <= 2) {
-      //     bankerDraw = true;
-      // }
-      // else if (bankerCardsValue == 3 && player3rdCardValue != 8)  {
-      //     bankerDraw = true;
-      // }
-      // else if (bankerCardsValue == 4 && player3rdCardValue >= 2 && player3rdCardValue <= 7) {
-      //     bankerDraw = true;
-      // }
-      // else if (bankerCardsValue == 5 && player3rdCardValue >= 4 && player3rdCardValue <= 7) {
-      //     bankerDraw = true;
-      // }
-      // else if (bankerCardsValue == 6 && playerCardsValue >= 6 && playerCardsValue <= 7) {
-      //     bankerDraw = true;
-      // }
     }
 
     if (bankerDraw) {
       let banker3rdCard = this.shoe.draw();
-      hand.bankerCards.push(banker3rdCard);
-      bankerCardsValue = this.resultsEngine.calculateHandValue(
-        hand.bankerCards,
-      );
+      this.hand.bankerCards.push(banker3rdCard);
     }
-
-    return hand;
   }
 }
 
