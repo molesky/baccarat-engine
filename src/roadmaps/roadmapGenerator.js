@@ -94,6 +94,8 @@ class RoadmapGenerator {
                 while (!done) {
                     let keySearch = `${probeColumn}.${probeRow}`;
                     let keySearchBelow = `${probeColumn}.${probeRow + 1}`;
+                    let keySearchTwoBelow = `${probeColumn}.${probeRow + 2}`;
+                    let keySearchLeftBelow = `${probeColumn - 1}.${probeRow + 1}`;
 
                     // Position available at current probe location
                     if (!_.get(placementMap, keySearch)) {
@@ -108,11 +110,18 @@ class RoadmapGenerator {
 
                         done = true;
                     } else if (probeRow + 1 >= rows) {
-                        // The spot below would go beyond the table bounds.
-                        probeColumn++;
+                      // The spot below would go beyond the table bounds.
+                      probeColumn++;
                     } else if (!_.get(placementMap, keySearchBelow)) {
-                        // The spot below is empty.
+                      // The spot below is empty.
+                      if ((_.get(placementMap, keySearchTwoBelow) &&  _.get(placementMap, keySearchTwoBelow).result.outcome === gameResult.outcome) ||
+                          (_.get(placementMap, keySearchLeftBelow) && _.get(placementMap, keySearchLeftBelow).result.outcome === gameResult.outcome)) {
+                        // The empty spot would merge with existing line below or to the left, so need to move right
+                        probeColumn++;
+                      } else {
+                        // Move to empty spot below
                         probeRow++;
+                      }
                     } else if (_.get(placementMap,
                      keySearchBelow).result.outcome === gameResult.outcome) {
                         // The result below is the same outcome.
