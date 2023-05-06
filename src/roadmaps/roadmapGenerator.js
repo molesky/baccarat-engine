@@ -90,6 +90,7 @@ class RoadmapGenerator {
                 let probeColumn = logicalColumnNumber;
                 let probeRow = 0;
                 let done = false;
+                let tailing = false;
 
                 while (!done) {
                     let keySearch = `${probeColumn}.${probeRow}`;
@@ -112,22 +113,29 @@ class RoadmapGenerator {
                     } else if (probeRow + 1 >= rows) {
                       // The spot below would go beyond the table bounds.
                       probeColumn++;
+                      tailing = true;
                     } else if (!_.get(placementMap, keySearchBelow)) {
                       // The spot below is empty.
-                      if ((_.get(placementMap, keySearchTwoBelow) &&  _.get(placementMap, keySearchTwoBelow).result.outcome === gameResult.outcome) ||
-                          (_.get(placementMap, keySearchLeftBelow) && _.get(placementMap, keySearchLeftBelow).result.outcome === gameResult.outcome)) {
+                      if(tailing) {
+                        // we're already in a tail
+                        probeColumn++;
+                      } else if ((_.get(placementMap, keySearchTwoBelow) &&  _.get(placementMap, keySearchTwoBelow).result.outcome === gameResult.outcome) ||
+                                 (_.get(placementMap, keySearchLeftBelow) && _.get(placementMap, keySearchLeftBelow).result.outcome === gameResult.outcome)) {
                         // The empty spot would merge with existing line below or to the left, so need to move right
                         probeColumn++;
+                        tailing = true;
                       } else {
                         // Move to empty spot below
                         probeRow++;
+                        tailing = false;
                       }
-                    } else if (_.get(placementMap,
-                     keySearchBelow).result.outcome === gameResult.outcome) {
+                    } else if (_.get(placementMap, keySearchBelow).result.outcome === gameResult.outcome) {
                         // The result below is the same outcome.
                         probeRow++;
+                        tailing = false;
                     } else {
                         probeColumn++;
+                        tailing = true;
                     }
                 }
 
